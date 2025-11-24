@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Editar Pessoa</title>
+</head>
+<body>
+    <h1>Editar Pessoa</h1>
+
+    <form method="POST">
+        Nome:<br>
+        <input type="text" name="nome" value="{{ pessoa.nome }}" required><br><br>
+
+        Email:<br>
+        <input type="email" name="email" value="{{ pessoa.email or '' }}"><br><br>
+
+        Telefone:<br>
+        <input type="text" name="telefone" value="{{ pessoa.telefone or '' }}"><br><br>
+
+        Endereço:<br>
+        <input type="text" name="endereco" value="{{ pessoa.endereco or '' }}"><br><br>
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <br>
+    <a href="/">Voltar</a>
+</body>
+</html>

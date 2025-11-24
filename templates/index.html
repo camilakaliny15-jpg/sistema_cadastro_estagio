@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro de Pessoas</title>
+</head>
+<body>
+    <h1>Lista de Pessoas</h1>
+    <a href="/add">Adicionar nova pessoa</a>
+    <hr>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+        </tr>
+        {% for pessoa in pessoas %}
+        <tr>
+            <td>{{ pessoa.id }}</td>
+            <td>{{ pessoa.nome }}</td>
+            <td>{{ pessoa.email or '' }}</td>
+            <td>{{ pessoa.telefone or '' }}</td>
+            <td>{{ pessoa.endereco or '' }}</td>
+            <td>
+                <a href="/edit/{{ pessoa.id }}">Editar</a> |
+                <a href="/delete/{{ pessoa.id }}" onclick="return confirm('Excluir este registro?');">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
