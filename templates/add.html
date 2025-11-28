@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Adicionar Pessoa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <h1>Adicionar Pessoa</h1>
 
-    <form method="POST">
+    <form method="POST" class="form">
         Nome:<br>
         <input type="text" name="nome" required><br><br>
 
@@ -20,10 +21,12 @@
         Endereço:<br>
         <input type="text" name="endereco"><br><br>
 
-        <button type="submit">Cadastrar</button>
+        <button class="btn" type="submit">Cadastrar</button>
     </form>
 
     <br>
     <a href="/">Voltar</a>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

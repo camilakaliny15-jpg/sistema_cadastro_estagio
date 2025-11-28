@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Editar Pessoa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <h1>Editar Pessoa</h1>
 
-    <form method="POST">
+    <form method="POST" class="form">
         Nome:<br>
         <input type="text" name="nome" value="{{ pessoa.nome }}" required><br><br>
 
@@ -20,10 +21,12 @@
         Endereço:<br>
         <input type="text" name="endereco" value="{{ pessoa.endereco or '' }}"><br><br>
 
-        <button type="submit">Salvar</button>
+        <button class="btn" type="submit">Salvar</button>
     </form>
 
     <br>
     <a href="/">Voltar</a>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

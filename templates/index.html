@@ -3,33 +3,44 @@
 <head>
     <meta charset="utf-8">
     <title>Cadastro de Pessoas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Lista de Pessoas</h1>
-    <a href="/add">Adicionar nova pessoa</a>
-    <hr>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Telefone</th>
-            <th>Endereço</th>
-            <th>Ações</th>
-        </tr>
-        {% for pessoa in pessoas %}
-        <tr>
-            <td>{{ pessoa.id }}</td>
-            <td>{{ pessoa.nome }}</td>
-            <td>{{ pessoa.email or '' }}</td>
-            <td>{{ pessoa.telefone or '' }}</td>
-            <td>{{ pessoa.endereco or '' }}</td>
-            <td>
-                <a href="/edit/{{ pessoa.id }}">Editar</a> |
-                <a href="/delete/{{ pessoa.id }}" onclick="return confirm('Excluir este registro?');">Excluir</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <header>
+        <h1>Lista de Pessoas</h1>
+        <a class="btn" href="/add">Adicionar nova pessoa</a>
+    </header>
+
+    <main>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pessoa in pessoas %}
+                <tr>
+                    <td>{{ pessoa.id }}</td>
+                    <td>{{ pessoa.nome }}</td>
+                    <td>{{ pessoa.email or '' }}</td>
+                    <td>{{ pessoa.telefone or '' }}</td>
+                    <td>{{ pessoa.endereco or '' }}</td>
+                    <td>
+                        <a class="link" href="/edit/{{ pessoa.id }}">Editar</a> |
+                        <a class="link danger" href="/delete/{{ pessoa.id }}" onclick="return confirm('Excluir este registro?');">Excluir</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>
