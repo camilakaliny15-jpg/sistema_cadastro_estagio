@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Adicionar Pessoa</title>
-</head>
-<body>
-    <h1>Adicionar Pessoa</h1>
+{% extends "base.html" %}
 
-    <form method="POST">
-        Nome:<br>
-        <input type="text" name="nome" required><br><br>
+{% block title %}Adicionar Pessoa{% endblock %}
 
-        Email:<br>
-        <input type="email" name="email"><br><br>
-
-        Telefone:<br>
-        <input type="text" name="telefone"><br><br>
-
-        Endereço:<br>
-        <input type="text" name="endereco"><br><br>
-
-        <button type="submit">Cadastrar</button>
+{% block content %}
+    <h2 class="mb-4">Adicionar Nova Pessoa</h2>
+    
+    <form method="POST" action="{{ url_for('add') }}">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="mb-3">
+            <label for="telefone" class="form-label">Telefone:</label>
+            <input type="text" class="form-control" id="telefone" name="telefone">
+        </div>
+        <div class="mb-3">
+            <label for="endereco" class="form-label">Endereço:</label>
+            <input type="text" class="form-control" id="endereco" name="endereco">
+        </div>
+        
+        <button type="submit" class="btn btn-success me-2">Cadastrar</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
-
-    <br>
-    <a href="/">Voltar</a>
-</body>
-</html>
+{% endblock %}

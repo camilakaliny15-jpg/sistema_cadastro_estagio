@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Editar Pessoa</title>
-</head>
-<body>
-    <h1>Editar Pessoa</h1>
+{% extends "base.html" %}
 
-    <form method="POST">
-        Nome:<br>
-        <input type="text" name="nome" value="{{ pessoa.nome }}" required><br><br>
+{% block title %}Editar Pessoa - {{ super() }}{% endblock %}
 
-        Email:<br>
-        <input type="email" name="email" value="{{ pessoa.email or '' }}"><br><br>
-
-        Telefone:<br>
-        <input type="text" name="telefone" value="{{ pessoa.telefone or '' }}"><br><br>
-
-        Endereço:<br>
-        <input type="text" name="endereco" value="{{ pessoa.endereco or '' }}"><br><br>
-
-        <button type="submit">Salvar</button>
+{% block content %}
+    <h2>Editar Pessoa: {{ pessoa.nome }}</h2>
+    
+    <form method="POST" action="{{ url_for('edit', id=pessoa.id) }}">
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value="{{ pessoa.nome }}" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ pessoa.email }}">
+        </div>
+        <div>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" value="{{ pessoa.telefone }}">
+        </div>
+        <div>
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" value="{{ pessoa.endereco }}">
+        </div>
+        
+        <button type="submit">Salvar Alterações</button>
+        <a href="{{ url_for('index') }}">Cancelar</a>
     </form>
-
-    <br>
-    <a href="/">Voltar</a>
-</body>
-</html>
+{% endblock %}

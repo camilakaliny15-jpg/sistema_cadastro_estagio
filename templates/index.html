@@ -1,35 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Cadastro de Pessoas</title>
-</head>
-<body>
-    <h1>Lista de Pessoas</h1>
-    <a href="/add">Adicionar nova pessoa</a>
-    <hr>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Telefone</th>
-            <th>Endereço</th>
-            <th>Ações</th>
-        </tr>
-        {% for pessoa in pessoas %}
-        <tr>
-            <td>{{ pessoa.id }}</td>
-            <td>{{ pessoa.nome }}</td>
-            <td>{{ pessoa.email or '' }}</td>
-            <td>{{ pessoa.telefone or '' }}</td>
-            <td>{{ pessoa.endereco or '' }}</td>
-            <td>
-                <a href="/edit/{{ pessoa.id }}">Editar</a> |
-                <a href="/delete/{{ pessoa.id }}" onclick="return confirm('Excluir este registro?');">Excluir</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Lista de Pessoas{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Lista de Pessoas Cadastradas</h2>
+
+    <a href="{{ url_for('add') }}" class="btn btn-primary mb-3">
+        <i class="fas fa-plus-circle"></i> Adicionar Nova Pessoa
+    </a>
+
+    {% if pessoas %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pessoa in pessoas %}
+                    <tr>
+                        <td>{{ pessoa.id }}</td>
+                        <td>{{ pessoa.nome }}</td>
+                        <td>{{ pessoa.email }}</td>
+                        <td>{{ pessoa.telefone }}</td>
+                        <td>{{ pessoa.endereco }}</td>
+                        <td class="text-center" style="width: 150px;">
+                            <a href="{{ url_for('edit', id=pessoa.id) }}" class="btn btn-sm btn-info me-2 text-white">Editar</a>
+                            
+                            <a href="{{ url_for('delete', id=pessoa.id) }}" 
+                               class="btn btn-sm btn-danger" 
+                               onclick="return confirm('Tem certeza que deseja excluir {{ pessoa.nome }}?');">
+                                Excluir
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Nenhuma pessoa cadastrada ainda. Clique em "Adicionar Nova Pessoa" para começar.
+        </div>
+    {% endif %}
+{% endblock %}
