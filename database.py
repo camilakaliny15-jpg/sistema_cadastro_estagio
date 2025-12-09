@@ -1,23 +1,53 @@
-import sqlite3
+import requests
 
-# Conecta ao banco (se não existir, cria)
-conn = sqlite3.connect('cadastro.db')
+SUPABASE_URL = "https://bjzbnvjgsmiumlkucvtl.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqemJudmpnc21pdW1sa3VjdnRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjAzODUsImV4cCI6MjA4MDY5NjM4NX0.yv850FKtEbtnsQeOk16iWc4MDOVy3JuWgBdFc9_5G_A"  # chave anon pública
 
-# Cria cursor
-cursor = conn.cursor()
+headers={
+    "apikey": SUPABASE_KEY,
+    "Authorization": f"Bearer {SUPABASE_KEY}",
+    "Content-Type": "application/json",
+    "Prefer": "return=representation"
+}
 
-# Cria tabela pessoas
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS pessoas (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    telefone TEXT,
-    email TEXT,
-    endereco TEXT
-)
-''')
+# 🔹 LISTAR PESSOAS
+def listar_pessoas():
+    url = f"{SUPABASE_URL}/rest/v1/pessoas?select=*"
+    response = requests.get(url, headers=headers)
+    return response.json()
 
-conn.commit()
-conn.close()
+# 🔹 ADICIONAR PESSOA
+def adicionar_pessoa(nome, email, telefone, endereco):
+    url = f"{SUPABASE_URL}/rest/v1/pessoas"
+    data = {
+        "nome": nome,
+        "email": email,
+        "telefone": telefone,
+        "endereco": endereco
+    }
+    response = requests.post(url, json=data, headers=headers)
+    return response.json()
 
-print("Banco de dados 'cadastro.db' e tabela 'pessoas' criados com sucesso!")
+# 🔹 BUSCAR PESSOA PELO ID
+def buscar_pessoa(id):
+    url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}&select=*"
+    response = requests.get(url, headers=headers)
+    dados = response.json()
+    return dados[0] if dados else None
+# atualizar pessoa
+def atualizar_pessoa(id, nome, email, telefone, endereco):
+    url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}"
+    data = {
+        "nome": nome,
+        "email": email,
+        "telefone": telefone,
+        "endereco": endereco
+    }
+    response = requests.patch(url, json=data, headers=headers)
+    return response.json()
+
+# 🔹 DELETAR PESSOA
+def excluir_pessoa(id):
+    url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}"
+    requests.delete(url, headers=headers)
+    return True
