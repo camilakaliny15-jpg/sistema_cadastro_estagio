@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Cadastro de Instituições{% endblock %}</title>
+    <style>
+        :root {
+            --cor-principal: #C0392B; 
+            --cor-secundaria: #E74C3C; 
+            --cor-fundo: #f4f4f4;
+            --cor-texto: #333;
+            --cor-borda: #ddd;
+            --cor-sucesso: #2ecc71; 
+            --cor-erro: #e74c3c; 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+        }
+
+        .navbar {
+            background-color: var(--cor-principal);
+            padding: 15px 30px;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: var(--cor-secundaria);
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: var(--cor-principal);
+            border-bottom: 2px solid var(--cor-borda);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos de Formulários e Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: opacity 0.3s;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary { background-color: var(--cor-secundaria); color: white; }
+        .btn-primary:hover { background-color: var(--cor-principal); }
+        .btn-danger { background-color: #E74C3C; color: white; }
+        .btn-danger:hover { background-color: #C0392B; }
+        .btn-secondary { background-color: #95a5a6; color: white; }
+        .btn-secondary:hover { background-color: #7f8c8d; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        form label { display: block; margin-top: 10px; font-weight: bold; }
+        form input[type="text"], form input[type="email"], form select { /* Adicionado 'select' para novos campos */
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 4px;
+        }
+        form button[type="submit"] { margin-top: 20px; width: 100%; }
+        .museum-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .museum-table th, .museum-table td { border: 1px solid var(--cor-borda); padding: 10px; text-align: left; }
+        .museum-table th { background-color: var(--cor-principal); color: white; }
+        .actions { white-space: nowrap; }
+        .actions .btn { padding: 5px 10px; }
+
+        /* Estilo para Flash Messages */
+        .flash-message {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .flash-message.success {
+            background-color: #e6f7e9;
+            color: var(--cor-sucesso);
+            border: 1px solid var(--cor-sucesso);
+        }
+        .flash-message.error {
+            background-color: #f7e6e6;
+            color: var(--cor-erro);
+            border: 1px solid var(--cor-erro);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>📚 Cadastro de Instituições</h1>
+        <div>
+            <a href="{{ url_for('index') }}">Listar Instituições</a>
+            <a href="{{ url_for('add') }}">Novo Cadastro</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
