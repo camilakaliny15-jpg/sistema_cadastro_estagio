@@ -1,3 +1,10 @@
 __pycache__/
 *.csv
 stdout
+cadastro.db
+backup.db
+*.db
+__pycache__/
+stdout
+pessoas.csv
+
