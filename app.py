@@ -91,7 +91,17 @@ def edit(id):
 def delete(id):
     excluir_instituicao(id)
     return redirect("/")
+#-----------------------
+# VER DETALHES
+#-----------------------
+@app.route("/view/<int:id>")
+def view(id):
+    instituicao = buscar_instituicao(id)
 
+    if not instituicao:
+        return redirect("/")
+
+    return render_template("view.html", instituicao=instituicao)
 
 # -----------------------------
 # RODAR O SERVIDOR
