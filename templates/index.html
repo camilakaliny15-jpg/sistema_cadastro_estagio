@@ -30,14 +30,14 @@
     </div>
 
     <div class="main-content">
-        {% with messages = get_flashed_messages(with_categories=true) %}
+   <!--     {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
                     <div class="flash-{{ category }}">{{ message }}</div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
-
+-->
         <h2>Instituições Cadastradas</h2>
 
         <form method="GET" action="{{ url_for('index') }}" style="margin-bottom: 20px;">
@@ -45,8 +45,7 @@
             <button type="submit">Buscar</button>
         </form>
 
-        <p>Total de instituições cadastradas: **{{ instituicoes|length }}**</p>
-
+        <p>Total de instituições cadastradas: <strong>{{ instituicoes|length }}</strong></p>
         <table>
             <thead>
                 <tr>
@@ -57,28 +56,35 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for instituicao in instituicoes %}
-                <tr>
-                    <td>{{ instituicao.id }}</td>
-                    <td>
-                        <strong>{{ instituicao.nome_oficial }}</strong>
-                        <br><small>{{ instituicao.endereco_completo }}</small>
-                    </td>
-                    <td>{{ instituicao.email_oficial }}</td>
-                    <td>{{ instituicao.telefone_principal }}</td>
-                    <td class="actions">
-                        <a href="{{ url_for('view', id=instituicao.id) }}" class="btn-view">Ver Detalhes</a>
-                        <a href="{{ url_for('edit', id=instituicao.id) }}" class="btn-edit">Editar</a>
-                        <a href="{{ url_for('delete', id=instituicao.id) }}" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir {{ instituicao.nome_oficial }}?')">Excluir</a>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="5">Nenhuma instituição cadastrada ou encontrada.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+<tbody>
+    {% for instituicao in instituicoes %}
+    <tr>
+        <td>{{ instituicao['id'] }}</td>
+        <td>
+            <strong>{{ instituicao['nome_oficial'] }}</strong>
+            <br>
+            <small>{{ instituicao['endereco_completo'] }}</small>
+        </td>
+        <td>{{ instituicao['email_oficial'] }}</td>
+        <td>{{ instituicao['telefone_principal'] }}</td>
+
+        {# 
+        <td class="actions">
+            <a href="{{ url_for('view', id=instituicao['id']) }}" class="btn-view">Ver Detalhes</a>
+            <a href="{{ url_for('edit', id=instituicao['id']) }}" class="btn-edit">Editar</a>
+            <a href="{{ url_for('delete', id=instituicao['id']) }}" class="btn-delete"
+               onclick="return confirm('Tem certeza que deseja excluir?')">
+               Excluir
+            </a>
+        </td>
+        #}
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="5">Nenhuma instituição cadastrada ou encontrada.</td>
+    </tr>
+    {% endfor %}
+</tbody>
         </table>
     </div>
 </body>

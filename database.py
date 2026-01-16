@@ -40,14 +40,25 @@ def excluir_instituicao(id):
     response = requests.delete(url, headers=headers)
     return response.status_code
 
+# BUSCAR INSTITUICAO POR EMAIL CNPJ E NOME
+def buscar_instituicoes_por_termo(termo):
+    termo = termo.lower()
+    url = (
+        f"{SUPABASE_URL}/rest/v1/instituicoes?"
+        f"or=("
+        f"nome_oficial.ilike.*{termo}*,"
+        f"email_oficial.ilike.*{termo}*,"
+        f"cnpj.ilike.*{termo}*"
+        f")&select=*"
+    )
+    response = requests.get(url, headers=headers)
+    return response.json()
 
 
 
 
 
-
-
-#------ 🔹🔹nao 		#ultilizado 🔹do 	momento-----------#
+#------ 🔹🔹nao 		#ultilizado 🔹no 	momento-----------#
 # 🔹 LISTAR PESSOAS
 def listar_pessoas():
     url = f"{SUPABASE_URL}/rest/v1/pessoas?select=*"
