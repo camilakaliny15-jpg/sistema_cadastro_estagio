@@ -9,36 +9,7 @@ headers={
     "Content-Type": "application/json",
     "Prefer": "return=representation"
 }
-# 🔹 LISTAR INSTITUIÇÕES
-def listar_instituicoes():
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?select=*"
-    response = requests.get(url, headers=headers)
-    return response.json()
-
-# 🔹 BUSCAR INSTITUIÇÃO POR ID
-def buscar_instituicao(id):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?id=eq.{id}&select=*"
-    response = requests.get(url, headers=headers)
-    dados = response.json()
-    return dados[0] if dados else None
-
-# 🔹 ADICIONAR INSTITUIÇÃO
-def adicionar_instituicao(dados):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes"
-    response = requests.post(url, headers=headers, json=dados)
-    return response.status_code
-
-# 🔹 ATUALIZAR INSTITUIÇÃO
-def atualizar_instituicao(id, dados):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?id=eq.{id}"
-    response = requests.patch(url, headers=headers, json=dados)
-    return response.status_code
-
-# 🔹 EXCLUIR INSTITUIÇÃO
-def excluir_instituicao(id):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?id=eq.{id}"
-    response = requests.delete(url, headers=headers)
-    return response.status_code
+#
 
 
 
@@ -47,7 +18,27 @@ def excluir_instituicao(id):
 
 
 
-#------ 🔹🔹nao 		#ultilizado 🔹do 	momento-----------#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#------ 🔹🔹nao 		#ultilizado 🔹do 	
+omento-----------#
 # 🔹 LISTAR PESSOAS
 def listar_pessoas():
     url = f"{SUPABASE_URL}/rest/v1/pessoas?select=*"
