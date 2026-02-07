@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Editar Pessoa{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2> Editar Pessoa</h2>
+
+    <form method="POST">
+        <label>Nome</label>
+        <input type="text" name="nome" value="{{ pessoa.nome | default('', true) }}">
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ pessoa.email | default('', true) }}">
+
+        <label>Telefone</label>
+        <input type="text" name="telefone" value="{{ pessoa.telefone | default('', true) }}">
+
+        <label>Endereço</label>
+        <input type="text" name="endereco" value="{{ pessoa.endereco | default('', true) }}">
+
+        <label>Instagram</label>
+        <input type="text" name="instagram" value="{{ pessoa.instagram | default('', true) }}">
+
+        <label>Facebook</label>
+        <input type="text" name="facebook" value="{{ pessoa.facebook | default('', true) }}">
+
+        <label>Cargo</label>
+        <input type="text" name="cargo" value="{{ pessoa.cargo | default('', true) }}">
+
+        <label>Observações</label>
+        <textarea name="observacao" rows="4">{{ pessoa.observacao | default('', true) }}</textarea>
+
+        <br><br>
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        <a href="{{ url_for('pessoas') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

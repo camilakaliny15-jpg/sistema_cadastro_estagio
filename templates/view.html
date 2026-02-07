@@ -49,16 +49,18 @@
             <div class="detail-row"><span class="detail-label">Endereço:</span><span>{{ instituicao.endereco_completo or 'N/A' }}</span></div>
             <div class="detail-row"><span class="detail-label">CEP:</span><span>{{ instituicao.cep or 'N/A' }}</span></div>
             <div class="detail-row"><span class="detail-label">Cidade/Estado:</span><span>{{ instituicao.cidade or 'N/A' }} / {{ instituicao.estado or 'N/A' }}</span></div>
-            
-            <h3>Ponto de Contato</h3>
-            <div class="detail-row"><span class="detail-label">Pessoa Contato:</span><span>{{ instituicao.pessoa_contato or 'N/A' }}</span></div>
+<h3>Ponto de Contato</h3>
+<div class="detail-row">
+    <span class="detail-label">Pessoa de Contato / Responsável:</span>
+    <span class="detail-value">{{ instituicao.pessoa_contato | default('—', true) }}</span>
+</div>
 
-        </div>
-
-        <div class="actions-bottom">
-            <a href="{{ url_for('index') }}" class="btn-back">Voltar para a Lista</a>
-            <a href="{{ url_for('edit', id=instituicao.id) }}" class="btn-edit">Editar Esta Instituição</a>
-        </div>
-    </div>
+<h3>Observações</h3>
+<div class="detail-row">
+    <span class="detail-label">Observações:</span>
+    <span class="detail-value" style="white-space: pre-wrap;">
+        {{ instituicao.observacao | default('—', true) }}
+    </span>
+</div>            
 </body>
 </html>

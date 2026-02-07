@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Pessoa{% endblock %}
+
+{% block content %}
+<h2> Cadastrar Pessoa Física </h2>
+
+<form method="POST" action="{{ url_for('add_pessoa') }}">
+
+    <label>Nome *</label>
+    <input type="text" name="nome" required>
+
+    <label>Email *</label>
+    <input type="email" name="email" required>
+
+    <label>Telefone</label>
+    <input type="text" name="telefone">
+
+    <label>Endereço</label>
+    <input type="text" name="endereco">
+
+    <label>Instagram</label>
+    <input type="text" name="instagram" placeholder="@usuario">
+
+    <label>Facebook</label>
+    <input type="text" name="facebook" placeholder="link ou nome">
+<label for="cargo">Cargo:</label>
+<input type="text" id="cargo" name="cargo">
+
+<label for="observacao">Observações:</label>
+<textarea id="observacao" name="observacao" rows="4"></textarea>
+    <br><br>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="{{ url_for('pessoas') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock %}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Cadastro - Lista de Instituições</title>
+    <title>Agenda De Cadastros</title>
     <style>
         body { font-family: sans-serif; margin: 20px; }
         .header-bar { background-color: #A00000; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -22,10 +22,11 @@
 </head>
 <body>
     <div class="header-bar">
-        <h1>Sistema de Cadastro - Lista de Instituições</h1>
+        <h1>Agenda De Cadastros</h1>
         <div>
             <a href="{{ url_for('index') }}">Listar Instituições</a>
-            <a href="{{ url_for('add') }}">Novo Cadastro</a>
+            <a href="{{ url_for('add') }}">Cadastrar instituição</a>
+            <a href="{{ url_for('pessoas') }}">Listar Pessoas</a>
         </div>
     </div>
 
@@ -54,36 +55,45 @@
                     <th>Email</th>
                     <th>Telefone Principal</th>
                     <th>Ações</th>
-                </tr>
-            </thead>
-<tbody>
-    {% for instituicao in instituicoes %}
-    <tr>
-        <td>{{ instituicao['id'] }}</td>
-        <td>
-            <strong>{{ instituicao['nome_oficial'] }}</strong>
-            <br>
-            <small>{{ instituicao['endereco_completo'] }}</small>
-        </td>
-        <td>{{ instituicao['email_oficial'] }}</td>
-        <td>{{ instituicao['telefone_principal'] }}</td>
+                </tr>      
+      </thead>
+<table class="museum-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Instituição</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
 
-        <td class="actions">
-            <a href="{{ url_for('view', id=instituicao['id']) }}" class="btn-view">Ver Detalhes</a>
-            <a href="{{ url_for('edit', id=instituicao['id']) }}" class="btn-edit">Editar</a>
-            <a href="{{ url_for('delete', id=instituicao['id']) }}" class="btn-delete"
-               onclick="return confirm('Tem certeza que deseja excluir?')">
-               Excluir
-            </a>
-        </td>
-    </tr>
-    {% else %}
-    <tr>
-        <td colspan="5">Nenhuma instituição cadastrada ou encontrada.</td>
-    </tr>
-    {% endfor %}
-</tbody>
-        </table>
+    <tbody>
+        {% for instituicao in instituicoes %}
+        <tr>
+            <td>{{ instituicao['id'] }}</td>
+
+            <td>
+                <strong>{{ instituicao['nome_oficial'] }}</strong><br>
+                <small>{{ instituicao['endereco_completo'] }}</small>
+            </td>
+
+            <td>{{ instituicao['email_oficial'] }}</td>
+            <td>{{ instituicao['telefone_principal'] }}</td>
+<td class="actions">
+    <a href="{{ url_for('view', id=instituicao['id']) }}" class="btn-view">Ver Detalhes</a>
+    <a href="{{ url_for('edit', id=instituicao['id']) }}" class="btn-edit">Editar</a>
+    <a href="{{ url_for('delete', id=instituicao['id']) }}" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
+</td>
+
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">Nenhuma instituição cadastrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
     </div>
 </body>
 </html>

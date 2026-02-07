@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="header-bar">
-        <h1>Sistema de Cadastro</h1>
+<h1></h1>
         <div>
             <a href="{{ url_for('index') }}">Listar Instituições</a>
             <a href="{{ url_for('add') }}">Novo Cadastro</a>
@@ -98,16 +98,20 @@
                     <input type="text" id="site_url" name="site_url">
                 </div>
             </div>
-            
-            <h3>3. Ponto de Contato</h3>
-            <div class="form-full">
-                <label for="pessoa_contato">Pessoa de Contato / Responsável</label>
-                <input type="text" id="pessoa_contato" name="pessoa_contato">
-            </div>
+<h3>3. Ponto de Contato</h3>
+<div class="form-full">
+    <label for="pessoa_contato">Pessoa de Contato / Responsável</label>
+    <input type="text" id="pessoa_contato" name="pessoa_contato">
+</div>
 
-            <div class="form-full" style="margin-top: 30px;">
-                <button type="submit">Cadastrar Instituição</button>
-            </div>
+<div class="form-full">
+    <label for="observacao">Observações:</label>
+    <textarea id="observacao" name="observacao" rows="4" placeholder="Digite observações aqui..."></textarea>
+</div>
+
+<div class="form-full" style="margin-top: 30px;">
+    <button type="submit">Cadastrar Instituição</button>
+</div>            
         </form>
     </div>
 </body>

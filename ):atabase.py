@@ -69,14 +69,13 @@ def listar_pessoas():
 def adicionar_pessoa(dados):
     url = f"{SUPABASE_URL}/rest/v1/pessoas"
     response = requests.post(url, json=dados, headers=headers)
-
-    if response.status_code >= 400:
-        print("ERRO:", response.status_code, response.text)
-
     return response.status_code
-
-# 🔹 BUSCAR PESSOA PELO ID
-def buscar_pessoa(id):
+# 🔹 BUSCAR PESSOA PELO ID	
+def buscar_def adicionar_pessoa(dados):
+    url = f"{SUPABASE_URL}/rest/v1/pessoas"
+    response = requests.post(url, json=dados, headers=headers)
+    return response.status_code
+pessoa(id):
     url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}&select=*"
     response = requests.get(url, headers=headers)
     dados = response.json()
@@ -86,6 +85,7 @@ def atualizar_pessoa(id, dados):
     url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}"
     response = requests.patch(url, json=dados, headers=headers)
     return response.status_code
+
 # 🔹 DELETAR PESSOA
 def excluir_pessoa(id):
     url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}"

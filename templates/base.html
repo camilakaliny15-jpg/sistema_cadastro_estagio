@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html <	ang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <title>{% block title %}Cadastro de Instituições{% endblock %}</title>
     <style>
         :root {
@@ -24,7 +26,7 @@
         }
 
         .navbar {
-            background-color: var(--cor-principal);
+="            background-color: var(--cor-principal);
             padding: 15px 30px;
             color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -95,7 +97,8 @@
         .museum-table th { background-color: var(--cor-principal); color: white; }
         .actions { white-space: nowrap; }
         .actions .btn { padding: 5px 10px; }
-
+        .museum-table.pessoas th { background-color: #f2f2f2; /* cinza claro */ color: var(--cor-texto);
+}
         /* Estilo para Flash Messages */
         .flash-message {
             padding: 15px;
@@ -113,27 +116,131 @@
             color: var(--cor-erro);
             border: 1px solid var(--cor-erro);
         }
-    </style>
+
+*/ PARTE DE PESSOAS */
+
+<style>
+:root {
+    --cor-principal: #C0392B;
+    --cor-secundaria: #E74C3C;
+    --cor-fundo: #f4f4f4;
+    --cor-texto: #333;
+    --cor-borda: #ddd;
+}
+
+.navbar {
+    background-color: var(--cor-principal);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 22px;
+    color: white;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+
+/* ===============================
+   Estilos para o form de busca
+   =============================== */
+.search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 4px;
+    flex: 1;           /* Ocupa só o espaço restante */
+    max-width: 250px;  /* Limita o tamanho da caixa */
+}
+
+.search-form button {
+    padding: 6px 12px;
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;       /* Evita pegar width 100% global */
+}
+
+}
+/* parte de acoes */
+.btn {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-info {
+    background-color: #3498db;
+    color: white;
+}
+.btn-info:hover {
+    background-color: #2980b9;
+}
+
+.btn-warning {
+    background-color: #f1c40f;
+    color: black;
+}
+.btn-warning:hover {
+    background-color: #d4ac0d;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+</style>
 </head>
 <body>
-    <div class="navbar">
-        <h1>📚 Cadastro de Instituições</h1>
-        <div>
-            <a href="{{ url_for('index') }}">Listar Instituições</a>
-            <a href="{{ url_for('add') }}">Novo Cadastro</a>
-        </div>
+<div class="navbar">
+    <h1>{% block page_title %}{% endblock %}</h1>
+    <div>
+        <a href="{{ url_for('index') }}">Listar Instituições</a>
+        <a href="{{ url_for('add_pessoa') }}">Cadastrar Pessoa</a>
+        <a href="{{ url_for('pessoas') }}">Listar Pessoas</a>
     </div>
-    
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash-message {{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        
-        {% block content %}{% endblock %}
+</div>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
     </div>
 </body>
 </html>
+
