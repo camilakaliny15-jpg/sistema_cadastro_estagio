@@ -1,66 +1,20 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes: {{ instituicao.nome_oficial }}</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .header-bar { background-color: #A00000; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .header-bar a { color: white; text-decoration: none; margin-left: 20px; }
-        .main-content { padding: 20px; max-width: 800px; margin: auto; }
-        .details-box { border: 1px solid #ccc; padding: 20px; border-radius: 5px; background-color: #f9f9f9; }
-        .detail-row { display: grid; grid-template-columns: 150px 1fr; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px;}
-        .detail-label { font-weight: bold; color: #555; }
-        h2, h3 { color: #A00000; border-bottom: 2px solid #A00000; padding-bottom: 5px; margin-top: 25px;}
-        .actions-bottom { margin-top: 20px; }
-        .actions-bottom a { margin-right: 10px; text-decoration: none; padding: 8px 15px; border-radius: 3px; }
-        .btn-edit { background-color: #f39c12; color: white; }
-        .btn-back { background-color: #7f8c8d; color: white; }
-    </style>
-</head>
-<body>
-    <div class="header-bar">
-        <h1>Sistema de Cadastro</h1>
-        <div>
-            <a href="{{ url_for('index') }}">Listar Instituições</a>
-            <a href="{{ url_for('add') }}">Novo Cadastro</a>
-        </div>
-    </div>
+{% extends 'base.html' %}
 
-    <div class="main-content">
-        <h2>Detalhes da Instituição (ID: {{ instituicao.id }})</h2>
-        <div class="details-box">
+{% block content %}
+<h2>Detalhes da Instituição</h2>
 
-            <h3>Identificação</h3>
-            <div class="detail-row"><span class="detail-label">Nome Oficial:</span><span>{{ instituicao.nome_oficial }}</span></div>
-            <div class="detail-row"><span class="detail-label">Nome Fantasia:</span><span>{{ instituicao.nome_fantasia or 'N/A' }}</span></div>
-            <div class="detail-row"><span class="detail-label">CNPJ:</span><span>{{ instituicao.cnpj }}</span></div>
-            <div class="detail-row"><span class="detail-label">Tipo:</span><span>{{ instituicao.tipo_instituicao or 'Não Informado' }}</span></div>
-            <div class="detail-row"><span class="detail-label">Status:</span><span>{{ instituicao.status_cadastro }}</span></div>
-
-            <h3>Contato</h3>
-            <div class="detail-row"><span class="detail-label">Email Oficial:</span><span>{{ instituicao.email_oficial }}</span></div>
-            <div class="detail-row"><span class="detail-label">Telefone Principal:</span><span>{{ instituicao.telefone_principal or 'N/A' }}</span></div>
-            <div class="detail-row"><span class="detail-label">Telefone Alternativo:</span><span>{{ instituicao.telefone_alternativo or 'N/A' }}</span></div>
-            <div class="detail-row"><span class="detail-label">Site/URL:</span><span><a href="{{ instituicao.site_url }}" target="_blank">{{ instituicao.site_url or 'N/A' }}</a></span></div>
-
-            <h3>Localização</h3>
-            <div class="detail-row"><span class="detail-label">Endereço:</span><span>{{ instituicao.endereco_completo or 'N/A' }}</span></div>
-            <div class="detail-row"><span class="detail-label">CEP:</span><span>{{ instituicao.cep or 'N/A' }}</span></div>
-            <div class="detail-row"><span class="detail-label">Cidade/Estado:</span><span>{{ instituicao.cidade or 'N/A' }} / {{ instituicao.estado or 'N/A' }}</span></div>
-<h3>Ponto de Contato</h3>
-<div class="detail-row">
-    <span class="detail-label">Pessoa de Contato / Responsável:</span>
-    <span class="detail-value">{{ instituicao.pessoa_contato | default('—', true) }}</span>
+<div class="detalhes-container" style="border: 1px solid #ccc; padding: 20px;">
+    <h3>{{ instituicao.nome_oficial }}</h3>
+    <hr>
+    
+    <p><strong>ID:</strong> {{ instituicao.id }}</p>
+    <p><strong>Status:</strong> 
+        <span style="color: {% if instituicao.status == 'Ativo' %}green{% else %}red{% endif %};">
+            {{ instituicao.status }}
+        </span>
+    </p>
 </div>
 
-<h3>Observações</h3>
-<div class="detail-row">
-    <span class="detail-label">Observações:</span>
-    <span class="detail-value" style="white-space: pre-wrap;">
-        {{ instituicao.observacao | default('—', true) }}
-    </span>
-</div>            
-</body>
-</html>
+<br>
+<a href="/">Voltar</a>
+{% endblock %}

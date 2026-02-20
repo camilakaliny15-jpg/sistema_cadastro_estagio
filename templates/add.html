@@ -1,118 +1,22 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo Cadastro de Instituição</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .header-bar { background-color: #A00000; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .header-bar a { color: white; text-decoration: none; margin-left: 20px; }
-        .main-content { padding: 20px; max-width: 800px; margin: auto; }
-        form div { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], input[type="email"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .form-group { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-full { grid-column: span 2; }
-        button { background-color: #A00000; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <div class="header-bar">
-<h1></h1>
-        <div>
-            <a href="{{ url_for('index') }}">Listar Instituições</a>
-            <a href="{{ url_for('add') }}">Novo Cadastro</a>
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow p-4">
+    <h3 class="mb-4 text-danger border-bottom pb-2">Cadastrar Instituição</h3>
+    <form method="POST">
+        <div class="row g-3">
+            <div class="col-md-12"><label class="form-label fw-bold">Nome Oficial</label>
+                <input type="text" name="nome_oficial" class="form-control" placeholder="Ex: Biblioteca Municipal" required></div>
+            <div class="col-md-6"><label class="form-label fw-bold">E-mail</label>
+                <input type="email" name="email_oficial" class="form-control"></div>
+            <div class="col-md-6"><label class="form-label fw-bold">Telefone</label>
+                <input type="text" name="telefone_principal" class="form-control"></div>
+            <div class="col-md-6"><label class="form-label fw-bold">Instagram</label>
+                <input type="text" name="site_url" class="form-control" placeholder="@perfil"></div>
+            <div class="col-md-6"><label class="form-label fw-bold">Localização (Endereço)</label>
+                <input type="text" name="endereco_completo" class="form-control"></div>
         </div>
-    </div>
-
-    <div class="main-content">
-        <h2>Cadastrar Nova Instituição</h2>
-
-        <form method="POST" action="{{ url_for('add') }}">
-            
-            <h3>1. Identificação Básica</h3>
-            <div class="form-full">
-                <label for="nome_oficial">Nome Oficial *</label>
-                <input type="text" id="nome_oficial" name="nome_oficial" required>
-            </div>
-            <div class="form-group">
-                <div>
-                    <label for="nome_fantasia">Nome Fantasia</label>
-                    <input type="text" id="nome_fantasia" name="nome_fantasia">
-                </div>
-                <div>
-                    <label for="cnpj">CNPJ *</label>
-                    <input type="text" id="cnpj" name="cnpj" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <label for="tipo_instituicao">Tipo de Instituição</label>
-                    <input type="text" id="tipo_instituicao" name="tipo_instituicao" placeholder="Ex: Biblioteca Pública, ONG...">
-                </div>
-                <div>
-                    <label for="status_cadastro">Status</label>
-                    <select id="status_cadastro" name="status_cadastro">
-                        <option value="Ativa">Ativa</option>
-                        <option value="Inativa">Inativa</option>
-                    </select>
-                </div>
-            </div>
-
-            <h3>2. Contato e Localização</h3>
-            <div class="form-full">         <label for="email_oficial">Email Oficial *</label>
-                <input type="email" id="email_oficial" name="email_oficial" required>
-            </div>
-            <div class="form-group">
-                <div>
-                    <label for="telefone_principal">Telefone Principal</label>
-                    <input type="text" id="telefone_principal" name="telefone_principal">
-                </div>
-                <div>
-                    <label for="telefone_alternativo">Telefone Alternativo</label>
-                    <input type="text" id="telefone_alternativo" name="telefone_alternativo">
-                </div>
-            </div>
-            <div class="form-full">
-                <label for="endereco_completo">Endereço Completo</label>
-                <input type="text" id="endereco_completo" name="endereco_completo">
-            </div>
-            <div class="form-group">
-                <div>
-                    <label for="cep">CEP</label>
-                    <input type="text" id="cep" name="cep">
-                </div>
-                <div>
-                    <label for="cidade">Cidade</label>
-                    <input type="text" id="cidade" name="cidade">
-                </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <label for="estado">Estado (UF)</label>
-                    <input type="text" id="estado" name="estado" maxlength="2">
-                </div>
-                <div>
-                    <label for="site_url">Site / URL</label>
-                    <input type="text" id="site_url" name="site_url">
-                </div>
-            </div>
-<h3>3. Ponto de Contato</h3>
-<div class="form-full">
-    <label for="pessoa_contato">Pessoa de Contato / Responsável</label>
-    <input type="text" id="pessoa_contato" name="pessoa_contato">
+        <div class="mt-4"><button type="submit" class="btn btn-danger px-5">Salvar Instituição</button>
+            <a href="/escolher_cadastro" class="btn btn-outline-secondary ms-2">Voltar</a></div>
+    </form>
 </div>
-
-<div class="form-full">
-    <label for="observacao">Observações:</label>
-    <textarea id="observacao" name="observacao" rows="4" placeholder="Digite observações aqui..."></textarea>
-</div>
-
-<div class="form-full" style="margin-top: 30px;">
-    <button type="submit">Cadastrar Instituição</button>
-</div>            
-        </form>
-    </div>
-</body>
-</html>
+{% endblock %}

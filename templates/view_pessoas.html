@@ -1,27 +1,12 @@
-{% extends "base.html" %}
-
-{% block title %}Detalhes da Pessoa{% endblock %}
-
+{% extends 'base.html' %}
 {% block content %}
-<h2> Detalhes da Pessoa</h2>
-
-<p><b>Nome:</b> {{ pessoa.nome }}</p>
-<p><b>Email:</b> {{ pessoa.email }}</p>
-<p><b>Telefone:</b> {{ pessoa.telefone }}</p>
-<p><b>Endereço:</b> {{ pessoa.endereco }}</p>
-<p><b>Instagram:</b> {{ pessoa.instagram }}</p>
-<p><b>Facebook:</b> {{ pessoa.facebook }}</p>
-<div class="detail-row">
-  <span class="detail-label">Cargo:</span>
-  <span class="detail-value">{{ pessoa.cargo | default('—', true) }}</span>
-</div>
-<h3 style="margin-bottom: 5px;">Observações</h3>
-<div class="detail-row" style="margin-top: 0;">
-  <span class="detail-value" style="white-space: pre-wrap;">
-    {{ pessoa.observacao | default('—', true) }}
-  </span>
-</div>
-<br>
-<a href="{{ url_for('pessoas') }}" class="btn btn-secondary">Voltar</a>
-
+<h2>Detalhes: {{ pessoa.nome }}</h2>
+<p><strong>Email:</strong> {{ pessoa.email }}</p>
+<p><strong>Telefone:</strong> {{ pessoa.telefone }}</p>
+<p><strong>Cargo:</strong> {{ pessoa.cargo }}</p>
+<p><strong>Instagram:</strong> {{ pessoa.instagram }}</p>
+<p><strong>Observação:</strong> {{ pessoa.observacao }}</p>
+<hr>
+<a href="/pessoas/edit/{{ pessoa.id }}">Editar</a> | 
+<a href="/pessoas">Voltar</a>
 {% endblock %}

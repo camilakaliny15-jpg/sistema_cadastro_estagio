@@ -1,99 +1,40 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda De Cadastros</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .header-bar { background-color: #A00000; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .header-bar a { color: white; text-decoration: none; margin-left: 20px; }
-        .main-content { padding: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .actions a { margin-right: 5px; text-decoration: none; padding: 5px 10px; border-radius: 3px; }
-        .btn-view { background-color: #3498db; color: white; }
-        .btn-edit { background-color: #f39c12; color: white; }
-        .btn-delete { background-color: #e74c3c; color: white; }
-        .flash-success { background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border: 1px solid #c3e6cb; border-radius: 4px; }
-        .flash-error { background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border: 1px solid #f5c6cb; border-radius: 4px; }
-    </style>
-</head>
-<body>
-    <div class="header-bar">
-        <h1>Agenda De Cadastros</h1>
-        <div>
-            <a href="{{ url_for('index') }}">Listar Instituições</a>
-            <a href="{{ url_for('add') }}">Cadastrar instituição</a>
-            <a href="{{ url_for('pessoas') }}">Listar Pessoas</a>
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="mb-4">Instituições Cadastradas</h2>
+    
+    <form action="/" method="GET" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Buscar instituição...">
+            <button class="btn btn-dark" type="submit">Buscar</button>
         </div>
-    </div>
+    </form>
 
-    <div class="main-content">
-   <!--     {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
--->
-        <h2>Instituições Cadastradas</h2>
-
-        <form method="GET" action="{{ url_for('index') }}" style="margin-bottom: 20px;">
-            <input type="text" name="q" placeholder="Buscar por Nome, Email ou CNPJ..." value="{{ query_term or '' }}" style="padding: 8px; width: 300px;">
-            <button type="submit">Buscar</button>
-        </form>
-
-        <p>Total de instituições cadastradas: <strong>{{ instituicoes|length }}</strong></p>
-        <table>
-            <thead>
+    <div class="table-responsive">
+        <table class="table table-hover border">
+            <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
                     <th>Nome Oficial</th>
                     <th>Email</th>
-                    <th>Telefone Principal</th>
-                    <th>Ações</th>
-                </tr>      
-      </thead>
-<table class="museum-table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Instituição</th>
-            <th>Email</th>
-            <th>Telefone</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for instituicao in instituicoes %}
-        <tr>
-            <td>{{ instituicao['id'] }}</td>
-
-            <td>
-                <strong>{{ instituicao['nome_oficial'] }}</strong><br>
-                <small>{{ instituicao['endereco_completo'] }}</small>
-            </td>
-
-            <td>{{ instituicao['email_oficial'] }}</td>
-            <td>{{ instituicao['telefone_principal'] }}</td>
-<td class="actions">
-    <a href="{{ url_for('view', id=instituicao['id']) }}" class="btn-view">Ver Detalhes</a>
-    <a href="{{ url_for('edit', id=instituicao['id']) }}" class="btn-edit">Editar</a>
-    <a href="{{ url_for('delete', id=instituicao['id']) }}" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
-</td>
-
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="5">Nenhuma instituição cadastrada.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                    <th>Telefone</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inst in instituicoes %}
+                <tr>
+                    <td><strong>{{ inst.nome_oficial }}</strong></td>
+                    <td>{{ inst.email_oficial }}</td>
+                    <td>{{ inst.telefone_principal }}</td>
+                    <td class="text-center">
+                        <a href="/view/{{ inst.id }}" class="btn btn-sm btn-info text-white">Ver</a>
+                        <a href="/edit/{{ inst.id }}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="/delete/{{ inst.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
