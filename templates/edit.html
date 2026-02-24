@@ -1,34 +1,48 @@
 {% extends "base.html" %}
+
+{% block title %}Editar Instituição{% endblock %}
+{% block page_title %}Editar Instituição{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow">
-<div class="card-header bg-light text-dark">
-                <h4 class="mb-0">Manutenção de Instituição</h4>
-            </div>
-            <div class="card-body">
-                <form method="POST">
-                    <div class="row g-3">
-                        <div class="col-md-12">
-                            <label class="form-label">Nome Oficial</label>
-                            <input type="text" name="nome_oficial" class="form-control" value="{{ instituicao.nome_oficial if instituicao else '' }}" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">CNPJ</label>
-                            <input type="text" name="cnpj" class="form-control" value="{{ instituicao.cnpj if instituicao else '' }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Email Oficial</label>
-                            <input type="email" name="email_oficial" class="form-control" value="{{ instituicao.email_oficial if instituicao else '' }}">
-                        </div>
-                    </div>
-                    <div class="mt-4 d-flex justify-content-between">
-                        <a href="/" class="btn btn-secondary">Voltar</a>
-                        <button type="submit" class="btn btn-success px-5">Salvar Registro</button>
-                    </div>
-                </form>
-            </div>
+<h2>Editar Instituição</h2>
+
+<form method="POST" action="{{ url_for('edit_instituicao', id=instituicao.id) }}">
+    <div class="row g-3">
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Nome Oficial</label>
+            <input type="text" name="nome_oficial" class="form-control" value="{{ instituicao.nome_oficial }}" required>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-bold">E-mail</label>
+            <input type="email" name="email_oficial" class="form-control" value="{{ instituicao.email_oficial }}">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Telefone</label>
+            <input type="text" name="telefone_principal" class="form-control" value="{{ instituicao.telefone_principal }}">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Instagram / Site</label>
+            <input type="text" name="site_url" class="form-control" value="{{ instituicao.site_url }}">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Endereço</label>
+            <input type="text" name="endereco_completo" class="form-control" value="{{ instituicao.endereco_completo }}">
+        </div>
+
+        <div class="col-md-12">
+            <label>Observações</label>
+            <textarea name="observacao" class="form-control">{{ instituicao.observacao }}</textarea>
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-danger fw-bold">Salvar Alterações</button>
         </div>
     </div>
-</div>
+</form>
+
 {% endblock %}
+

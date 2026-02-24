@@ -59,7 +59,7 @@ def add():
     return render_template("add.html")
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
-def edit(id):
+def edit_instituicao(id):
     instituicao = buscar_instituicao(id)
     if not instituicao:
         return redirect(url_for("index"))
