@@ -46,13 +46,16 @@ def add():
             "nome_oficial": request.form.get("nome_oficial"),
             "email_oficial": request.form.get("email_oficial"),
             "telefone_principal": request.form.get("telefone_principal"),
-            "site_url": request.form.get("site_url"), # Instagram
+            "site_url": request.form.get("site_url"),
             "endereco_completo": request.form.get("endereco_completo"),
-            "cnpj": request.form.get("cnpj"),
-            "status": "Ativo"
+            "status": "Ativo",
+            "observacao": request.form.get("observacao"),
         }
+
         adicionar_instituicao(dados)
+
         return redirect(url_for("index"))
+
     return render_template("add.html")
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])

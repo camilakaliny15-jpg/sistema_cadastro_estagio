@@ -6,15 +6,19 @@
 <div class="detalhes-container" style="border: 1px solid #ccc; padding: 20px;">
     <h3>{{ instituicao.nome_oficial }}</h3>
     <hr>
-    
-    <p><strong>ID:</strong> {{ instituicao.id }}</p>
-    <p><strong>Status:</strong> 
-        <span style="color: {% if instituicao.status == 'Ativo' %}green{% else %}red{% endif %};">
-            {{ instituicao.status }}
-        </span>
-    </p>
+
+    <p><strong>Email:</strong> {{ instituicao.email_oficial or '-' }}</p>
+
+    <p><strong>Telefone:</strong> {{ instituicao.telefone_principal or '-' }}</p>
+
+    <p><strong>Instagram:</strong> {{ instituicao.site_url or '-' }}</p>
+
+    <p><strong>Endereço:</strong> {{ instituicao.endereco_completo or '-' }}</p>
+
+    <p><strong>Observações:</strong> {{ instituicao.observacao or '-' }}</p>
+
 </div>
 
 <br>
-<a href="/">Voltar</a>
+<a href="/" class="btn btn-outline-danger">Voltar</a>
 {% endblock %}

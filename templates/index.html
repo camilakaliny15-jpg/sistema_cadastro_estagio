@@ -6,20 +6,22 @@
     <form action="/" method="GET" class="mb-4">
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Buscar instituição...">
-            <button class="btn btn-dark" type="submit">Buscar</button>
+            <button class="btn btn-danger" type="submit">Buscar</button>
         </div>
     </form>
 
     <div class="table-responsive">
         <table class="table table-hover border">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nome Oficial</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th class="text-center">Ações</th>
-                </tr>
-            </thead>
+<thead style="background-color: #a50000; color: white;">
+<thead>
+    <tr>
+        <th style="background-color: #a50000; color: white;">Nome Oficial</th>
+        <th style="background-color: #a50000; color: white">Email</th>
+        <th style="background-color: #a50000; color: white;">Telefone</th>
+        <th style="background-color: #a50000; color: white;" class="text-center">Ações</th>
+    </tr>
+</thead>
+
             <tbody>
                 {% for inst in instituicoes %}
                 <tr>
@@ -27,7 +29,7 @@
                     <td>{{ inst.email_oficial }}</td>
                     <td>{{ inst.telefone_principal }}</td>
                     <td class="text-center">
-                        <a href="/view/{{ inst.id }}" class="btn btn-sm btn-info text-white">Ver</a>
+                        <a href="/view/{{ inst.id }}" class="btn btn-sm btn-info text-white">Ver detalhes</a>
                         <a href="/edit/{{ inst.id }}" class="btn btn-sm btn-warning">Editar</a>
                         <a href="/delete/{{ inst.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</a>
                     </td>

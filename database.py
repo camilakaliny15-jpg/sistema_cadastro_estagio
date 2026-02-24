@@ -27,7 +27,6 @@ def adicionar_instituicao(dados):
     url = f"{SUPABASE_URL}/rest/v1/instituicoes"
     response = requests.post(url, headers=headers, json=dados)
     return response.status_code
-
 # 🔹 ATUALIZAR INSTITUIÇÃO
 def atualizar_instituicao(id, dados):
     url = f"{SUPABASE_URL}/rest/v1/instituicoes?id=eq.{id}"
