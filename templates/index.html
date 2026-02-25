@@ -30,8 +30,16 @@
                     <td>{{ inst.telefone_principal }}</td>
                     <td class="text-center">
                         <a href="/view/{{ inst.id }}" class="btn btn-sm btn-info text-white">Ver detalhes</a>
+{% if inst.email_oficial %}
+<a href="mailto:{{ inst.email_oficial }}"
+   class="btn btn-sm btn-success"
+   title="Enviar convite por e-mail">
+    Email
+</a>
+{% endif %}
                         <a href="/edit/{{ inst.id }}" class="btn btn-sm btn-warning">Editar</a>
                         <a href="/delete/{{ inst.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</a>
+                        
                     </td>
                 </tr>
                 {% endfor %}
