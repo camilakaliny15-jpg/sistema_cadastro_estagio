@@ -2,7 +2,7 @@
 {% block content %}
 <div class="card shadow-sm p-4">
     <h2 class="mb-4">Instituições Cadastradas</h2>
-    
+
     <form action="/" method="GET" class="mb-4">
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Buscar instituição...">
@@ -11,40 +11,41 @@
     </form>
 
     <div class="table-responsive">
-        <table class="table table-hover border">
-<thead style="background-color: #a50000; color: white;">
-<thead>
-    <tr>
-        <th style="background-color: #a50000; color: white;">Nome Oficial</th>
-        <th style="background-color: #a50000; color: white">Email</th>
-        <th style="background-color: #a50000; color: white;">Telefone</th>
-        <th style="background-color: #a50000; color: white;" class="text-center">Ações</th>
-    </tr>
-</thead>
-
-            <tbody>
-                {% for inst in instituicoes %}
-                <tr>
-                    <td><strong>{{ inst.nome_oficial }}</strong></td>
-                    <td>{{ inst.email_oficial }}</td>
-                    <td>{{ inst.telefone_principal }}</td>
-                    <td class="text-center">
-                        <a href="/view/{{ inst.id }}" class="btn btn-sm btn-info text-white">Ver detalhes</a>
-{% if inst.email_oficial %}
-<a href="mailto:{{ inst.email_oficial }}"
-   class="btn btn-sm btn-success"
-   title="Enviar convite por e-mail">
-    Email
-</a>
-{% endif %}
-                        <a href="/edit/{{ inst.id }}" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="/delete/{{ inst.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?')">Excluir</a>
-                        
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<table class="table table-hover border">
+    <thead style="background-color: #a50000; color: white;">
+        <tr>
+            <th style="background-color: #a50000; color: white;">Nome Oficial</th>
+            <th style="background-color: #a50000; color: white;">Email</th>
+            <th style="background-color: #a50000; color: white;">Telefone</th>
+            <th style="background-color: #a50000; color: white;" class="text-center">Ações</th>
+        </tr>
+    </thead>
+<tbody>
+{% for inst in instituicoes %}
+<tr>
+    <td><strong>{{ inst.nome_oficial }}</strong></td>
+    <td>{{ inst.email_oficial }}</td>
+    <td>{{ inst.telefone_principal }}</td>
+    <td class="text-center">
+        <a href="/view/{{ inst.id }}" class="btn btn-sm btn-info text-white">Ver detalhes</a>
+        {% if inst.email_oficial %}
+        <a href="mailto:{{ inst.email_oficial }}"
+           class="btn btn-sm btn-success"
+           title="Enviar convite por e-mail">
+            Email
+        </a>
+        {% endif %}
+        <a href="/edit/{{ inst.id }}" class="btn btn-sm btn-warning">Editar</a>
+        <a href="/delete/{{ inst.id }}" class="btn btn-sm btn-danger"
+           onclick="return confirm('Excluir?')">Excluir</a>
+    </td>
+</tr>
+{% else %}
+<tr>
+    <td colspan="4" class="text-center text-danger fw-bold">Nenhuma instituição encontrada.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
 </div>
 {% endblock %}

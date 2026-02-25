@@ -39,22 +39,25 @@ def excluir_instituicao(id):
     response = requests.delete(url, headers=headers)
     return response.status_code
 
-# BUSCAR INSTITUICAO POR EMAIL CNPJ E NOME
+# BUSCAR INSTITUICAO POR EMAIL E NOME
 def buscar_instituicoes_por_termo(termo):
     termo = termo.lower()
+
     url = (
         f"{SUPABASE_URL}/rest/v1/instituicoes?"
         f"or=("
-        f"nome_oficial.ilike.*{termo}*,"
-        f"email_oficial.ilike.*{termo}*,"
-        f"cnpj.ilike.*{termo}*"
+        f"nome_oficial.ilike.%25{termo}%25,"
+        f"email_oficial.ilike.%25{termo}%25"
         f")&select=*"
     )
+
     response = requests.get(url, headers=headers)
-    return response.json()
+    dados = response.json()
 
+    if not isinstance(dados, list):
+        return []
 
-
+    return dados
 
 #-----------------Parte de pessoas---------------------#
 
