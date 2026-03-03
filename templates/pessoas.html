@@ -13,11 +13,23 @@
         </div>
     </form>
 
+<div id="botaoEmailPessoas" style="display:none;" class="mb-3">
+    <button onclick="enviarEmailsPessoas()" class="btn btn-primary">
+        Enviar e-mail para selecionados
+    </button>
+</div>
+
     <div class="table-responsive">
         <table class="table table-hover border align-middle">
 <thead style="background-color: #a50000; color: white;">
 <thead>
     <tr>
+        <th class="text-center"
+            style="width:40px; background-color:#a50000; color:white;">
+            <input type="checkbox"
+                   id="selecionarTodosPessoas"
+                   onclick="selecionarTodosPessoas()">
+        </th>
         <th style="background-color: #a50000; color: white;">Nome</th>
         <th style="background-color: #a50000; color: white;">Email</th>
         <th style="background-color: #a50000; color: white;">Telefone</th>
@@ -30,23 +42,31 @@
             <tbody>
                 {% for p in pessoas %}
                 <tr>
-                    <td><strong>{{ p.nome }}</strong></td>
+  <td>
+        {% if p.email %}
+        <input type="checkbox"
+               name="emails_pessoas"
+               value="{{ p.email }}">
+        {% endif %}
+    </td>
+             
+       <td><strong>{{ p.nome }}</strong></td>
                     <td>{{ p.email }}</td>
                     <td>{{ p.telefone or 'Não informado' }}</td>
                     <td><span class="badge bg-secondary">{{ p.cargo or 'N/A' }}</span></td>
 <td class="text-center" style="white-space: nowrap;">
 
     <div>
-        <a href="/view/{{ p.id }}"
-           class="btn btn-sm btn-info text-white">
-           Ver detalhes
-        </a>
-
+<a href="{{ url_for('view_pessoa', id=p.id) }}"
+   class="btn btn-sm btn-info text-white">
+   Ver detalhes
+</a>
         {% if p.email %}
-        <a href="mailto:{{ p.email }}"
-           class="btn btn-sm btn-success">
-           Email
-        </a>
+<a href="https://mail.google.com/mail/?view=cm&to={{ p.email }}"
+   target="_blank"
+   class="btn btn-sm btn-success">
+   Email
+</a>
         {% endif %}
     </div>
 
@@ -75,4 +95,42 @@
         </table>
     </div>
 </div>
+<script>
+function selecionarTodosPessoas() {
+    let marcar = document.getElementById("selecionarTodosPessoas").checked;
+    let checkboxes = document.querySelectorAll('input[name="emails_pessoas"]');
+
+    checkboxes.forEach(cb => {
+        cb.checked = marcar;
+    });
+
+    atualizarBotaoPessoas();
+}
+
+function atualizarBotaoPessoas() {
+    let selecionados = document.querySelectorAll('input[name="emails_pessoas"]:checked');
+    let botao = document.getElementById("botaoEmailPessoas");
+
+    if (botao) {
+        botao.style.display = selecionados.length > 0 ? "block" : "none";
+    }
+}
+
+function enviarEmailsPessoas() {
+    let checkboxes = document.querySelectorAll('input[name="emails_pessoas"]:checked');
+    let emails = [];
+
+    checkboxes.forEach(cb => {
+        emails.push(cb.value);
+    });
+
+    if (emails.length > 0) {
+        let url = "https://mail.google.com/mail/?view=cm&fs=1&bcc=" + emails.join(",");
+        window.open(url, "_blank");
+    } else {
+        alert("Selecione pelo menos uma pessoa.");
+    }
+}
+
+</script>
 {% endblock %}

@@ -7,4 +7,10 @@ backup.db
 __pycache__/
 stdout
 pessoas.csv
-
+.env
+__pycache__/
+*.pyc
+backups/
+pessoas_rows.csv
+instituicoes_rows.csv
+backup_supabase.sql

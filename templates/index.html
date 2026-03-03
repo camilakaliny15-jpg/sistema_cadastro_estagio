@@ -10,10 +10,22 @@
         </div>
     </form>
 
+<div id="botaoEmailInst" style="display:none;" class="mb-3">
+    <button onclick="enviarEmailsInst()" class="btn btn-primary">
+        Enviar e-mail para selecionados
+    </button>
+</div>
+
     <div class="table-responsive">
 <table class="table table-hover border">
     <thead style="background-color: #a50000; color: white;">
         <tr>
+            <th class="text-center"
+            style="width:40px; background-color:#a50000; color:white;">
+            <input type="checkbox"
+                   id="selecionarTodosInst"
+                   onclick="selecionarTodosInst()">
+        </th>
             <th style="background-color: #a50000; color: white;">Nome Oficial</th>
             <th style="background-color: #a50000; color: white;">Email</th>
             <th style="background-color: #a50000; color: white;">Telefone</th>
@@ -23,18 +35,28 @@
 <tbody>
 {% for inst in instituicoes %}
 <tr>
+    <td>
+    {% if inst.email_oficial %}
+    <input type="checkbox"
+           name="emails_inst"
+           value="{{ inst.email_oficial }}"
+           onchange="atualizarBotaoInst()">
+    {% endif %}
+</td>
     <td><strong>{{ inst.nome_oficial }}</strong></td>
     <td>{{ inst.email_oficial }}</td>
     <td>{{ inst.telefone_principal }}</td>
     <td class="text-center">
         <a href="/view/{{ inst.id }}" class="btn btn-sm btn-info text-white">Ver detalhes</a>
-        {% if inst.email_oficial %}
-        <a href="mailto:{{ inst.email_oficial }}"
-           class="btn btn-sm btn-success"
-           title="Enviar convite por e-mail">
-            Email
-        </a>
-        {% endif %}
+
+{% if inst.email_oficial %}
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ inst.email_oficial }}"
+   target="_blank"
+   class="btn btn-sm btn-success">
+   Email
+</a>
+{% endif %}
+
         <a href="/edit/{{ inst.id }}" class="btn btn-sm btn-warning">Editar</a>
         <a href="/delete/{{ inst.id }}" class="btn btn-sm btn-danger"
            onclick="return confirm('Excluir?')">Excluir</a>
@@ -48,4 +70,44 @@
 </tbody>
 </table>
 </div>
+{% block scripts %}
+<script>
+
+function atualizarBotaoInst() {
+    let selecionados = document.querySelectorAll('input[name="emails_inst"]:checked');
+    let botaoDiv = document.getElementById("botaoEmailInst");
+
+    if (botaoDiv) {
+        botaoDiv.style.display = selecionados.length > 0 ? "block" : "none";
+    }
+}
+
+function selecionarTodosInst() {
+    let marcar = document.getElementById("selecionarTodosInst").checked;
+    let checkboxes = document.querySelectorAll('input[name="emails_inst"]');
+
+    checkboxes.forEach(cb => {
+        cb.checked = marcar;
+    });
+
+    atualizarBotaoInst();
+}
+
+function enviarEmailsInst() {
+    let checkboxes = document.querySelectorAll('input[name="emails_inst"]:checked');
+    let emails = [];
+
+    checkboxes.forEach(cb => {
+        emails.push(cb.value);
+    });
+
+    if (emails.length > 0) {
+        let url = "https://mail.google.com/mail/?view=cm&fs=1&bcc=" + emails.join(",");
+        window.open(url, "_blank");
+    } else {
+        alert("Selecione pelo menos uma instituição.");
+    }
+}
+</script>
+{% endblock %}
 {% endblock %}

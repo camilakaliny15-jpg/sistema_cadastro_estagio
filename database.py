@@ -1,14 +1,19 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-SUPABASE_URL = "https://bjzbnvjgsmiumlkucvtl.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqemJudmpnc21pdW1sa3VjdnRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjAzODUsImV4cCI6MjA4MDY5NjM4NX0.yv850FKtEbtnsQeOk16iWc4MDOVy3JuWgBdFc9_5G_A"  # chave anon pública
+load_dotenv()
 
-headers={
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+headers = {
     "apikey": SUPABASE_KEY,
     "Authorization": f"Bearer {SUPABASE_KEY}",
     "Content-Type": "application/json",
     "Prefer": "return=representation"
 }
+
 # 🔹 LISTAR INSTITUIÇÕES
 def listar_instituicoes():
     url = f"{SUPABASE_URL}/rest/v1/instituicoes?select=*"
