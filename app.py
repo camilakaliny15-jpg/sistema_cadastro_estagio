@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
+import os
+
 from database import (
     listar_instituicoes,
     adicionar_instituicao,
@@ -19,11 +21,13 @@ app = Flask(__name__)
 
 from database import db
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fundacao.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///fundacao.db"
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
-
 # -----------------------------
 # ROTA PRINCIPAL (INSTITUIÇÕES)
 # -----------------------------
