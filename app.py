@@ -17,6 +17,13 @@ from database import (
 
 app = Flask(__name__)
 
+from database import db
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fundacao.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
 # -----------------------------
 # ROTA PRINCIPAL (INSTITUIÇÕES)
 # -----------------------------
@@ -95,14 +102,16 @@ def view(id):
 def pessoas():
     query_term = request.args.get("q")
     todas_pessoas = listar_pessoas()
+
     if query_term:
         pessoas = [
             p for p in todas_pessoas
-            if query_term.lower() in p['nome'].lower()
-            or query_term.lower() in p['email'].lower()
+            if query_term.lower() in (p.nome or "").lower()
+            or query_term.lower() in (p.email or "").lower()
         ]
     else:
         pessoas = todas_pessoas
+
     return render_template("pessoas.html", pessoas=pessoas, query_term=query_term)
 
 @app.route("/pessoas/add", methods=["GET", "POST"])
@@ -154,4 +163,5 @@ def delete_pessoa(id):
 # -----------------------------
 # RODAR O SERVIDOR
 # -----------------------------
-app.run(host="0.0.0.0", port=8000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000, debug=True)

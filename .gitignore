@@ -14,3 +14,7 @@ backups/
 pessoas_rows.csv
 instituicoes_rows.csv
 backup_supabase.sql
+backup.sql
+instance/ 
+fundacao.db
+

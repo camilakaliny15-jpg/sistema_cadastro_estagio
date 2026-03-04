@@ -1,100 +1,72 @@
-import os
-import requests
-from dotenv import load_dotenv
+from flask_sqlalchemy import SQLAlchemy
 
-load_dotenv()
-
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-
-headers = {
-    "apikey": SUPABASE_KEY,
-    "Authorization": f"Bearer {SUPABASE_KEY}",
-    "Content-Type": "application/json",
-    "Prefer": "return=representation"
-}
+db = SQLAlchemy()
 
 # 🔹 LISTAR INSTITUIÇÕES
 def listar_instituicoes():
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?select=*"
-    response = requests.get(url, headers=headers)
-    return response.json()
+    from models import Instituicao
+    return Instituicao.query.all()
 
-# 🔹 BUSCAR INSTITUIÇÃO POR ID
 def buscar_instituicao(id):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?id=eq.{id}&select=*"
-    response = requests.get(url, headers=headers)
-    dados = response.json()
-    return dados[0] if dados else None
+    from models import Instituicao
+    return Instituicao.query.get(id)
 
-# 🔹 ADICIONAR INSTITUIÇÃO
 def adicionar_instituicao(dados):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes"
-    response = requests.post(url, headers=headers, json=dados)
-    return response.status_code
-# 🔹 ATUALIZAR INSTITUIÇÃO
+    from models import Instituicao
+    nova = Instituicao(**dados)
+    db.session.add(nova)
+    db.session.commit()
+
 def atualizar_instituicao(id, dados):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?id=eq.{id}"
-    response = requests.patch(url, headers=headers, json=dados)
-    return response.status_code
+    from models import Instituicao
+    inst = Instituicao.query.get(id)
+    if inst:
+        for key, value in dados.items():
+            setattr(inst, key, value)
+        db.session.commit()
 
-# 🔹 EXCLUIR INSTITUIÇÃO
 def excluir_instituicao(id):
-    url = f"{SUPABASE_URL}/rest/v1/instituicoes?id=eq.{id}"
-    response = requests.delete(url, headers=headers)
-    return response.status_code
+    from models import Instituicao
+    inst = Instituicao.query.get(id)
+    if inst:
+        db.session.delete(inst)
+        db.session.commit()
 
-# BUSCAR INSTITUICAO POR EMAIL E NOME
 def buscar_instituicoes_por_termo(termo):
-    termo = termo.lower()
+    from models import Instituicao
+    return Instituicao.query.filter(
+        (Instituicao.nome_oficial.ilike(f"%{termo}%")) |
+        (Instituicao.email_oficial.ilike(f"%{termo}%"))
+    ).all()
 
-    url = (
-        f"{SUPABASE_URL}/rest/v1/instituicoes?"
-        f"or=("
-        f"nome_oficial.ilike.%25{termo}%25,"
-        f"email_oficial.ilike.%25{termo}%25"
-        f")&select=*"
-    )
 
-    response = requests.get(url, headers=headers)
-    dados = response.json()
+# ---------------- PESSOAS ----------------
 
-    if not isinstance(dados, list):
-        return []
-
-    return dados
-
-#-----------------Parte de pessoas---------------------#
-
-# 🔹 LISTAR PESSOAS
 def listar_pessoas():
-    url = f"{SUPABASE_URL}/rest/v1/pessoas?select=*"
-    response = requests.get(url, headers=headers)
-    return response.json()
+    from models import Pessoa
+    return Pessoa.query.all()
 
-# 🔹 ADICIONAR PESSOA
 def adicionar_pessoa(dados):
-    url = f"{SUPABASE_URL}/rest/v1/pessoas"
-    response = requests.post(url, json=dados, headers=headers)
+    from models import Pessoa
+    nova = Pessoa(**dados)
+    db.session.add(nova)
+    db.session.commit()
 
-    if response.status_code >= 400:
-        print("ERRO:", response.status_code, response.text)
-
-    return response.status_code
-
-# 🔹 BUSCAR PESSOA PELO ID
 def buscar_pessoa(id):
-    url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}&select=*"
-    response = requests.get(url, headers=headers)
-    dados = response.json()
-    return dados[0] if dados else None
-# atualizar pessoa
+    from models import Pessoa
+    return Pessoa.query.get(id)
+
 def atualizar_pessoa(id, dados):
-    url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}"
-    response = requests.patch(url, json=dados, headers=headers)
-    return response.status_code
-# 🔹 DELETAR PESSOA
+    from models import Pessoa
+    pessoa = Pessoa.query.get(id)
+    if pessoa:
+        for key, value in dados.items():
+            setattr(pessoa, key, value)
+        db.session.commit()
+
 def excluir_pessoa(id):
-    url = f"{SUPABASE_URL}/rest/v1/pessoas?id=eq.{id}"
-    requests.delete(url, headers=headers)
-    return True
+    from models import Pessoa
+    pessoa = Pessoa.query.get(id)
+    if pessoa:
+        db.session.delete(pessoa)
+        db.session.commit()

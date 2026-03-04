@@ -43,11 +43,13 @@
                 {% for p in pessoas %}
                 <tr>
   <td>
-        {% if p.email %}
-        <input type="checkbox"
-               name="emails_pessoas"
-               value="{{ p.email }}">
-        {% endif %}
+{% if p.email %}
+    <input type="checkbox"
+           name="emails_pessoas"
+           value="{{ p.email }}"
+           onchange="atualizarBotaoPessoas()">
+{% endif %}
+
     </td>
              
        <td><strong>{{ p.nome }}</strong></td>
