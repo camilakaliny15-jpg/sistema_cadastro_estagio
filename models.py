@@ -32,4 +32,3 @@ class Pessoa(db.Model):
     cargo = db.Column(db.String)
     observacao = db.Column(db.String)
     instagram = db.Column(db.String)
-    facebook = db.Column(db.String)

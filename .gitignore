@@ -16,5 +16,6 @@ instituicoes_rows.csv
 backup_supabase.sql
 backup.sql
 instance/ 
+credenciais.json
 fundacao.db
 

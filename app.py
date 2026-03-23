@@ -16,11 +16,12 @@ from database import (
     atualizar_pessoa,
     excluir_pessoa
 )
+from sync_planilha import sincronizar_planilha
 
 app = Flask(__name__)
 
 from database import db
-
+from models import Pessoa, Instituicao
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
     "DATABASE_URL",
     "sqlite:///fundacao.db"
@@ -28,6 +29,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+with app.app_context():
+    db.create_all()
 # -----------------------------
 # ROTA PRINCIPAL (INSTITUIÇÕES)
 # -----------------------------
@@ -64,7 +67,7 @@ def add():
         }
 
         adicionar_instituicao(dados)
-
+        sincronizar_planilha(app)
         return redirect(url_for("index"))
 
     return render_template("add.html")
@@ -72,19 +75,15 @@ def add():
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit_instituicao(id):
     instituicao = buscar_instituicao(id)
+
     if not instituicao:
         return redirect(url_for("index"))
 
     if request.method == "POST":
-        dados = {
-            "nome_oficial": request.form.get("nome_oficial"),
-            "email_oficial": request.form.get("email_oficial"),
-            "telefone_principal": request.form.get("telefone_principal"),
-            "site_url": request.form.get("site_url"),
-            "endereco_completo": request.form.get("endereco_completo")
-        }
+        dados = request.form.to_dict()
         atualizar_instituicao(id, dados)
         return redirect(url_for("index"))
+
     return render_template("edit.html", instituicao=instituicao)
 
 @app.route("/delete/<int:id>")
@@ -130,6 +129,7 @@ def add_pessoa():
             "observacao": request.form.get("observacao"),
         }
         adicionar_pessoa(dados)
+        sincronizar_planilha(app)
         return redirect(url_for("pessoas"))
     return render_template("add_pessoas.html")
 
@@ -151,6 +151,7 @@ def edit_pessoa(id):
             "nome": request.form.get("nome"),
             "email": request.form.get("email"),
             "telefone": request.form.get("telefone"),
+            "endereco": request.form.get("endereco"),
             "instagram": request.form.get("instagram"),
             "cargo": request.form.get("cargo"),
             "observacao": request.form.get("observacao"),

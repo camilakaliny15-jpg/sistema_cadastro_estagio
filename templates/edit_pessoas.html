@@ -1,38 +1,62 @@
 {% extends "base.html" %}
-{% block title %}Editar Pessoa{% endblock %}
-
 {% block content %}
-<div class="form-container">
-    <h2> Editar Pessoa</h2>
 
-    <form method="POST">
-        <label>Nome</label>
-        <input type="text" name="nome" value="{{ pessoa.nome | default('', true) }}">
+<h2>Editar Pessoa</h2>
 
-        <label>Email</label>
-        <input type="email" name="email" value="{{ pessoa.email | default('', true) }}">
+<form method="POST">
+    <div class="row g-3">
 
-        <label>Telefone</label>
-        <input type="text" name="telefone" value="{{ pessoa.telefone | default('', true) }}">
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Nome</label>
+            <input type="text" name="nome" class="form-control"
+                   value="{{ pessoa.nome }}" required>
+        </div>
 
-        <label>Endereço</label>
-        <input type="text" name="endereco" value="{{ pessoa.endereco | default('', true) }}">
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Email</label>
+            <input type="email" name="email" class="form-control"
+                   value="{{ pessoa.email }}">
+        </div>
 
-        <label>Instagram</label>
-        <input type="text" name="instagram" value="{{ pessoa.instagram | default('', true) }}">
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Telefone</label>
+            <input type="text" name="telefone" class="form-control"
+                   value="{{ pessoa.telefone }}">
+        </div>
 
-        <label>Facebook</label>
-        <input type="text" name="facebook" value="{{ pessoa.facebook | default('', true) }}">
+        <div class="col-md-6">
+           <label class="form-label fw-bold">Endereço</label>
+           <input type="text" name="endereco" class="form-control"
+           value="{{ pessoa.endereco }}">
+</div>      
 
-        <label>Cargo</label>
-        <input type="text" name="cargo" value="{{ pessoa.cargo | default('', true) }}">
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Instagram</label>
+            <input type="text" name="instagram" class="form-control"
+                   value="{{ pessoa.instagram }}">
+        </div>
 
-        <label>Observações</label>
-        <textarea name="observacao" rows="4">{{ pessoa.observacao | default('', true) }}</textarea>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Cargo</label>
+            <input type="text" name="cargo" class="form-control"
+                   value="{{ pessoa.cargo }}">
+        </div>
 
-        <br><br>
-        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-        <a href="{{ url_for('pessoas') }}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
+        <div class="col-md-12">
+            <label>Observações</label>
+            <textarea name="observacao" class="form-control">{{ pessoa.observacao }}</textarea>
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-danger fw-bold">
+                Salvar Alterações
+            </button>
+            <a href="{{ url_for('pessoas') }}" class="btn btn-outline-secondary ms-2">
+                Cancelar
+            </a>
+        </div>
+
+    </div>
+</form>
+
 {% endblock %}

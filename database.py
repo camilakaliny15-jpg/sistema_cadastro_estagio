@@ -7,6 +7,21 @@ def listar_instituicoes():
     from models import Instituicao
     return Instituicao.query.all()
 
+def listar_instituicoes_dict():
+    from models import Instituicao
+    insts = Instituicao.query.all()
+    return [
+        {
+            "nome_oficial": i.nome_oficial,
+            "email_oficial": i.email_oficial,
+            "telefone_principal": i.telefone_principal,
+            "endereco_completo": i.endereco_completo,
+            "site_url": i.site_url,
+            "observacao": i.observacao
+        }
+        for i in insts
+    ]
+
 def buscar_instituicao(id):
     from models import Instituicao
     return Instituicao.query.get(id)
@@ -45,6 +60,22 @@ def buscar_instituicoes_por_termo(termo):
 def listar_pessoas():
     from models import Pessoa
     return Pessoa.query.all()
+
+def listar_pessoas_dict():
+    from models import Pessoa
+    pessoas = Pessoa.query.all()
+    return [
+        {
+            "nome": p.nome,
+            "email": p.email,
+            "telefone": p.telefone,
+            "endereco": p.endereco,
+            "instagram": p.instagram,
+            "cargo": p.cargo,
+            "observacao": p.observacao
+        }
+        for p in pessoas
+    ]
 
 def adicionar_pessoa(dados):
     from models import Pessoa
