@@ -37,7 +37,8 @@ def atualizar_instituicao(id, dados):
     inst = Instituicao.query.get(id)
     if inst:
         for key, value in dados.items():
-            setattr(inst, key, value)
+            if hasattr(inst, key):
+                 setattr(inst, key, value)
         db.session.commit()
 
 def excluir_instituicao(id):
@@ -92,7 +93,8 @@ def atualizar_pessoa(id, dados):
     pessoa = Pessoa.query.get(id)
     if pessoa:
         for key, value in dados.items():
-            setattr(pessoa, key, value)
+            if hasattr(pessoa, key):
+                setattr(pessoa, key, value)
         db.session.commit()
 
 def excluir_pessoa(id):

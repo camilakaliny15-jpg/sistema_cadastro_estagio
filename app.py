@@ -67,7 +67,11 @@ def add():
         }
 
         adicionar_instituicao(dados)
-        sincronizar_planilha(app)
+        try:
+            sincronizar_planilha(app)
+        except Exception as e:
+            print("Erro ao sincronizar:", e)
+
         return redirect(url_for("index"))
 
     return render_template("add.html")
@@ -82,6 +86,12 @@ def edit_instituicao(id):
     if request.method == "POST":
         dados = request.form.to_dict()
         atualizar_instituicao(id, dados)
+
+        try:
+            sincronizar_planilha(app)
+        except Exception as e:
+            print("Erro ao sincronizar:", e)
+
         return redirect(url_for("index"))
 
     return render_template("edit.html", instituicao=instituicao)
@@ -89,6 +99,12 @@ def edit_instituicao(id):
 @app.route("/delete/<int:id>")
 def delete(id):
     excluir_instituicao(id)
+
+    try:
+        sincronizar_planilha(app)
+    except Exception as e:
+        print("Erro ao sincronizar:", e)
+
     return redirect(url_for("index"))
 
 @app.route("/view/<int:id>")
@@ -124,13 +140,21 @@ def add_pessoa():
             "nome": request.form.get("nome"),
             "email": request.form.get("email"),
             "telefone": request.form.get("telefone"),
+            "endereco": request.form.get("endereco"),
             "instagram": request.form.get("instagram"),
             "cargo": request.form.get("cargo"),
             "observacao": request.form.get("observacao"),
         }
+
         adicionar_pessoa(dados)
-        sincronizar_planilha(app)
+
+        try:
+            sincronizar_planilha(app)
+        except Exception as e:
+            print("Erro ao sincronizar:", e)
+
         return redirect(url_for("pessoas"))
+
     return render_template("add_pessoas.html")
 
 @app.route("/pessoas/<int:id>")
@@ -157,14 +181,24 @@ def edit_pessoa(id):
             "observacao": request.form.get("observacao"),
         }
         atualizar_pessoa(id, dados)
+        try:
+            sincronizar_planilha(app)
+        except Exception as e:
+            print("Erro ao sincronizar:", e)
+
         return redirect(url_for("pessoas"))
     return render_template("edit_pessoas.html", pessoa=pessoa)
 
 @app.route("/pessoas/delete/<int:id>")
 def delete_pessoa(id):
     excluir_pessoa(id)
-    return redirect(url_for("pessoas"))
 
+    try:
+        sincronizar_planilha(app)
+    except Exception as e:
+        print("Erro ao sincronizar:", e)
+
+    return redirect(url_for("pessoas"))
 # -----------------------------
 # RODAR O SERVIDOR
 # -----------------------------
