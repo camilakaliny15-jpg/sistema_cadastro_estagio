@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
+import threading
 
 from database import (
     listar_instituicoes,
@@ -22,6 +23,7 @@ app = Flask(__name__)
 
 from database import db
 from models import Pessoa, Instituicao
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
     "DATABASE_URL",
     "sqlite:///fundacao.db"
@@ -29,8 +31,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+
 with app.app_context():
     db.create_all()
+
+# funçao para as planilhas
+def sincronizar_em_background():
+    try:
+        threading.Thread(target=sincronizar_planilha, args=(app,)).start()
+    except Exception as e:
+        print("Erro ao sincronizar:", e)
+
 # -----------------------------
 # ROTA PRINCIPAL (INSTITUIÇÕES)
 # -----------------------------
@@ -67,10 +78,7 @@ def add():
         }
 
         adicionar_instituicao(dados)
-        try:
-            sincronizar_planilha(app)
-        except Exception as e:
-            print("Erro ao sincronizar:", e)
+        sincronizar_em_background()
 
         return redirect(url_for("index"))
 
@@ -87,10 +95,7 @@ def edit_instituicao(id):
         dados = request.form.to_dict()
         atualizar_instituicao(id, dados)
 
-        try:
-            sincronizar_planilha(app)
-        except Exception as e:
-            print("Erro ao sincronizar:", e)
+        sincronizar_em_background()
 
         return redirect(url_for("index"))
 
@@ -100,10 +105,7 @@ def edit_instituicao(id):
 def delete(id):
     excluir_instituicao(id)
 
-    try:
-        sincronizar_planilha(app)
-    except Exception as e:
-        print("Erro ao sincronizar:", e)
+    sincronizar_em_background()
 
     return redirect(url_for("index"))
 
@@ -147,11 +149,7 @@ def add_pessoa():
         }
 
         adicionar_pessoa(dados)
-
-        try:
-            sincronizar_planilha(app)
-        except Exception as e:
-            print("Erro ao sincronizar:", e)
+        sincronizar_em_background()
 
         return redirect(url_for("pessoas"))
 
@@ -180,25 +178,22 @@ def edit_pessoa(id):
             "cargo": request.form.get("cargo"),
             "observacao": request.form.get("observacao"),
         }
+
         atualizar_pessoa(id, dados)
-        try:
-            sincronizar_planilha(app)
-        except Exception as e:
-            print("Erro ao sincronizar:", e)
+        sincronizar_em_background()
 
         return redirect(url_for("pessoas"))
+
     return render_template("edit_pessoas.html", pessoa=pessoa)
 
 @app.route("/pessoas/delete/<int:id>")
 def delete_pessoa(id):
     excluir_pessoa(id)
 
-    try:
-        sincronizar_planilha(app)
-    except Exception as e:
-        print("Erro ao sincronizar:", e)
+    sincronizar_em_background()
 
     return redirect(url_for("pessoas"))
+
 # -----------------------------
 # RODAR O SERVIDOR
 # -----------------------------
