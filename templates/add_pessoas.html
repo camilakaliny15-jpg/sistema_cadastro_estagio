@@ -22,8 +22,15 @@
             <div class="col-md-12"><label class="form-label fw-bold">Observação</label>
                 <textarea name="observacao" class="form-control" rows="3"></textarea></div>
         </div>
-        <div class="mt-4"><button type="submit" class="btn btn-dark px-5">Salvar Pessoa</button>
-            <a href="/escolher_cadastro" class="btn btn-outline-secondary ms-2">Voltar</a></div>
-    </form>
+<div class="mt-4">
+    <button type="submit" class="btn btn-dark px-5"
+        onclick="this.disabled=true; this.innerText='Salvando...';">
+        Salvar Pessoa
+    </button>
+
+    <a href="/escolher_cadastro" class="btn btn-outline-secondary ms-2">
+        Voltar
+    </a>
 </div>
+</form>
 {% endblock %}
