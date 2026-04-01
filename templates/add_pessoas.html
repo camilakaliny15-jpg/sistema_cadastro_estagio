@@ -1,36 +1,61 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="card shadow p-4 border-dark">
     <h3 class="mb-4 text-dark border-bottom pb-2">Cadastrar Pessoa</h3>
-    <form method="POST" action="/pessoas/add">
+
+    <form method="POST" action="/pessoas/add"
+          onsubmit="this.querySelector('button[type=submit]').disabled=true;
+                    this.querySelector('button[type=submit]').innerText='Salvando...';">
+
         <div class="row g-3">
-            <div class="col-md-12"><label class="form-label fw-bold">Nome Completo</label>
-                <input type="text" name="nome" class="form-control" required></div>
-            <div class="col-md-6"><label class="form-label fw-bold">E-mail</label>
-                <input type="email" name="email" class="form-control"></div>
-            <div class="col-md-6"><label class="form-label fw-bold">Telefone</label>
-                <input type="text" name="telefone" class="form-control"></div>
             <div class="col-md-12">
-        <label class="form-label fw-bold">Endereço</label>
-               <input type="text" name="endereco" class="form-control">
-    </div>         
+                <label class="form-label fw-bold">Nome Completo</label>
+                <input type="text" name="nome" class="form-control" required>
+            </div>
 
-   <div class="col-md-6"><label class="form-label fw-bold">Instagram</label>
-                <input type="text" name="instagram" class="form-control"></div>
-            <div class="col-md-6"><label class="form-label fw-bold">Cargo</label>
-                <input type="text" name="cargo" class="form-control"></div>
-            <div class="col-md-12"><label class="form-label fw-bold">Observação</label>
-                <textarea name="observacao" class="form-control" rows="3"></textarea></div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold">E-mail</label>
+                <input type="email" name="email" class="form-control">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-bold">Telefone</label>
+                <input type="text" name="telefone" class="form-control">
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label fw-bold">Endereço</label>
+                <input type="text" name="endereco" class="form-control">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-bold">Instagram</label>
+                <input type="text" name="instagram" class="form-control">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-bold">Cargo</label>
+                <input type="text" name="cargo" class="form-control">
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label fw-bold">Observação</label>
+                <textarea name="observacao" class="form-control" rows="3"></textarea>
+            </div>
         </div>
-<div class="mt-4">
-    <button type="submit" class="btn btn-dark px-5"
-        onclick="this.disabled=true; this.innerText='Salvando...';">
-        Salvar Pessoa
-    </button>
 
-    <a href="/escolher_cadastro" class="btn btn-outline-secondary ms-2">
-        Voltar
-    </a>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-dark px-5">
+                Salvar Pessoa
+            </button>
+
+            <a href="/escolher_cadastro" class="btn btn-outline-secondary ms-2">
+                Voltar
+            </a>
+        </div>
+    </form>
+
 </div>
-</form>
+
 {% endblock %}
