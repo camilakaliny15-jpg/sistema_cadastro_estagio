@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import threading
+import webbrowser
 
 from database import (
     listar_instituicoes,
@@ -19,7 +20,7 @@ from database import (
 )
 from sync_planilha import sincronizar_planilha
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 from database import db
 from models import Pessoa, Instituicao
@@ -197,5 +198,10 @@ def delete_pessoa(id):
 # -----------------------------
 # RODAR O SERVIDOR
 # -----------------------------
+def abrir_navegador():
+    webbrowser.open("http://127.0.0.1:8000")
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    threading.Timer(1.5, abrir_navegador).start()
+
+    app.run(host="0.0.0.0", port=8000, debug=False)
