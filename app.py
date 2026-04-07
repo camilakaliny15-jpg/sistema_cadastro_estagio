@@ -1,5 +1,7 @@
+
 from flask import Flask, render_template, request, redirect, url_for
 import os
+import sys
 import threading
 import webbrowser
 
@@ -25,10 +27,12 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 from database import db
 from models import Pessoa, Instituicao
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    "DATABASE_URL",
-    "sqlite:///fundacao.db"
-)
+def caminho_base():
+    return os.path.dirname(os.path.abspath(sys.executable if getattr(sys, 'frozen', False) else __file__))
+
+caminho_db = os.path.join(caminho_base(), "fundacao.db")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{caminho_db}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -202,6 +206,7 @@ def abrir_navegador():
     webbrowser.open("http://127.0.0.1:8000")
 
 if __name__ == "__main__":
-    threading.Timer(1.5, abrir_navegador).start()
+    threading.Timer(3, abrir_navegador).start()
 
     app.run(host="0.0.0.0", port=8000, debug=False)
+
